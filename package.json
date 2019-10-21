@@ -1,0 +1,42 @@
+{
+  "name": "floodgate-node-sdk",
+  "version": "1.0.0",
+  "description": "Node SDK for floodgate.io",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "transform": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/floodgate-io/javascript-sdk.git"
+  },
+  "keywords": [
+    "floodgate",
+    "feature flag",
+    "feature toggle",
+    "soft launch",
+    "remote config",
+    "canary release",
+    "remote management"
+  ],
+  "author": "FloodGate",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/floodgate-io/javascript-sdk/issues"
+  },
+  "homepage": "https://github.com/floodgate-io/javascript-sdk#readme",
+  "devDependencies": {
+    "ts-loader": "^6.2.0",
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "@types/node-cache": "^4.1.3",
+    "@types/node-fetch": "^2.5.2",
+    "events": "^3.0.0",
+    "js-sha1": "^0.6.0",
+    "node-cache": "^4.2.1",
+    "node-fetch": "^2.6.0"
+  }
+}

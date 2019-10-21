@@ -1,0 +1,13 @@
+export const ENV: string = "production";
+export const SDK_VERSION: string = "1.0.7";
+export const CACHE_ETAG: string = "etag";
+export const CACHE_LASTMODIFIED: string = "lastm";
+export const COMPARATOR_EQUAL_TO: number = 1;
+export const COMPARATOR_NOT_EQUAL_TO: number = 2;
+export const COMPARATOR_GREATOR: number = 3;
+export const COMPARATOR_GREATOR_EQUAL_TO: number = 4;
+export const COMPARATOR_LESS: number = 5;
+export const COMPARATOR_LESS_EQUAL_TO: number = 6;
+export const COMPARATOR_CONTAINS: number = 7;
+export const COMPARATOR_NOT_CONTAIN: number = 8;
+export const EVENT_SDK_READY: string = "ready";
