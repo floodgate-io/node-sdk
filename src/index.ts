@@ -15,7 +15,6 @@ export function createAutoUpdateClient(_sdkKey: string, _config: IAutoUpdateConf
   return new FloodGateClient(new AutoUpdateConfig(_sdkKey, _config));
 }
 
-// _id: string, _email?: string, _customAttributes?: { [key: string] : string; }
 export function createUser(_id: string, _email?: string, _customAttributes?: { [key: string] : string; }): User {
   return new User(_id, _email, _customAttributes);
 }
