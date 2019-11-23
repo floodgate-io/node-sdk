@@ -23,7 +23,7 @@ Below is a simple example of how you can use the Node.js SDK to check on the sta
 ```javascript
 import * as floodgate from "floodgate-node-sdk";
 
-let client = floodgate.createClient("[YOUR ENVIRONMENT SDK KEY]");
+const client = floodgate.createClient("[YOUR ENVIRONMENT SDK KEY]");
 
 client.on('ready', function() {
   const value = client.GetValue('my-feature-flag', 'default-value');
