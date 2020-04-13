@@ -2,7 +2,6 @@ import { EventEmitter } from "events";
 import { AutoUpdateConfig, IAutoUpdateConfig } from "./AutoUpdateConfig";
 import { AutoUpdateService, IAutoUpdateService } from "./AutoUpdateService";
 import { Evaluator } from "./Evaluator";
-import * as Type from "./Types";
 import * as Const from "./Consts";
 import { IUser, User } from "./User";
 
@@ -13,7 +12,6 @@ export interface IFloodGateClient {
 }
 
 export class FloodGateClient extends EventEmitter implements IFloodGateClient {
-
   private isReady = false;
 
   config: IAutoUpdateConfig;
@@ -24,12 +22,14 @@ export class FloodGateClient extends EventEmitter implements IFloodGateClient {
     super();
 
     const self = this;
-
+    
     this.config = _config;
+
     if (_config && _config instanceof AutoUpdateConfig) {
       this.service = new AutoUpdateService(_config);
+      this.config.logger.Log(`Setting service to AutoUpdateService`);
     }
-    // additional services...
+    // elseif additional services...
 
     else {
       throw new Error("Invalid service");
@@ -37,6 +37,9 @@ export class FloodGateClient extends EventEmitter implements IFloodGateClient {
 
     this.service.on('ready', function() {
       self.isReady = true;
+
+      self.config.logger.Log(`FloodGateClient() Ready`);
+
       self.emit(Const.EVENT_SDK_READY);
     }).Start();
   }
@@ -59,7 +62,7 @@ export class FloodGateClient extends EventEmitter implements IFloodGateClient {
     try {
       this.service.GetFlags((value) => {
         if (value) {
-          const evaluator = new Evaluator();
+          const evaluator = new Evaluator(this.config.logger);
           const result = evaluator.Evaluate(_key, value, _defaultValue, _user);
 
           // Return flag value to caller
@@ -94,10 +97,12 @@ export class FloodGateClient extends EventEmitter implements IFloodGateClient {
     
     try {
       const flags: any = this.service.GetFlagsLocal();
-
+      
       if (flags) {
-        const evaluator = new Evaluator();
+        const evaluator = new Evaluator(this.config.logger);
+        
         const result = evaluator.Evaluate(_key, flags, _defaultValue, _user);
+        
         return result;
       }
       return _defaultValue;

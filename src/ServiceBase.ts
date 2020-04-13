@@ -7,6 +7,7 @@ import * as Consts from "./Consts";
 
 export abstract class ServiceBase extends EventEmitter {
   protected config: IConfigBase;
+  
   protected cache: ICache;
 
   constructor(_config: IConfigBase) {
@@ -14,10 +15,12 @@ export abstract class ServiceBase extends EventEmitter {
 
     this.config = _config;
 
+    // TODO: review this as it may not be needed
     this.cache = new InMemoryCache();
     if (_config.cache) {
       this.cache = _config.cache;
     }
+    // this.cache = _config.cache ?? new InMemoryCache();
   }
 
   /**
@@ -26,22 +29,29 @@ export abstract class ServiceBase extends EventEmitter {
    * @param callback 
    */
   public FetchRemote(callback: (value: any) => void): void {
+    console.log(`FetchRemote()`);
+
     const requestHeaders: Types.KeyValue<string, string>[] = [
+      // {
+      //   key: "Accept",
+      //   value: "application/json"
+      // },
+      // {
+      //   key: "Content-Type",
+      //   value: "application/json"
+      // },
       {
-        key: "Accept",
-        value: "application/json"
+        key: "X-FloodGate-SDK-Agent",
+        value: `Node`
       },
       {
-        key: "Content-Type",
-        value: "application/json"
-      },
-      {
-        key: "FloodGate-SDK-Agent",
-        value: `js-v${Consts.SDK_VERSION}`
+        key: "X-FloodGate-SDK-Version",
+        value: this.config.Version
       }
     ];
+    console.log(requestHeaders);
 
-    const api = new ApiService().setHeaders(requestHeaders);
+    const api = new ApiService(this.config.logger).setHeaders(requestHeaders);
   
     const url = this.config.buildUrl();
 
@@ -64,7 +74,7 @@ export abstract class ServiceBase extends EventEmitter {
       if (typeof(etag) === "string") {
         etag = etag.replace(/['"]+/g, '');
       }
-      
+
       // Check current etag vs cached etag, return cached data if matched
       if ((etag !== null && etag !== undefined)) {
         if (etag == this.cache.Get(etagCacheKey)) {
@@ -72,7 +82,7 @@ export abstract class ServiceBase extends EventEmitter {
           callback(json);
           return;
         }
-
+  
         this.cache.Set(etagCacheKey, etag);
       }
 
@@ -99,6 +109,11 @@ export abstract class ServiceBase extends EventEmitter {
   public FetchLocal() {
     // const etagCacheKey = `${this.config.sdkKey}_${Consts.CACHE_ETAG}`;
 
+    if (this.config.localConfigData) {
+      this.config.logger.Log('Using localConfigData');
+      return this.config.localConfigData;
+    }
+
     const json: any = this.cache.Get(this.config.sdkKey);
 
     if (json) {
@@ -109,6 +124,9 @@ export abstract class ServiceBase extends EventEmitter {
   }
 
   private validateJson(json: string): boolean {
+
+    if (json == undefined || json == null) return false;
+
     return true;
   }
 }

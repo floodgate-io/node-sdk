@@ -23,6 +23,7 @@ export class AutoUpdateService extends ServiceBase implements IAutoUpdateService
   }
 
   private refresh(): void {
+    console.log(`Refreshing...`);
     super.FetchRemote(() => {});
   }
 

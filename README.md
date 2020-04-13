@@ -21,7 +21,7 @@ npm install floodgate-node-sdk
 Below is a simple example of how you can use the Node.js SDK to check on the status of a flag.
 
 ```javascript
-import * as floodgate from "floodgate-node-sdk";
+var floodgate = require("floodgate-node-sdk");
 
 const client = floodgate.createClient("[YOUR ENVIRONMENT SDK KEY]");
 

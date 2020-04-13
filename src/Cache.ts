@@ -31,12 +31,12 @@ export class InMemoryCache implements ICache {
   cache: { [key: string] : string; } = {};
 
   Get(key: string): any {
-    console.log(`Get ${key}`);
+    // console.log(`Get ${key}`);
     return this.cache[key];
   }
   
   Set(key: string, value: string): void {
-    console.log(`Set ${key}`);
+    // console.log(`Set ${key}`);
     this.cache[key] = value;
   }
 }
