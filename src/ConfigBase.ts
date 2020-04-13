@@ -56,13 +56,13 @@ export abstract class ConfigBase implements IConfigBase {
     this.Version = pckg.version;
 
     if (_options) {
-      if (!_options.cache) {
-        this.cache = new Cache.NodejsCache();
-      }
-
       if (_options.consoleLog) {
         this.logger = new ConsoleLogger();
         this.logger.Log('Enabling console logging');
+      }
+
+      if (!_options.cache) {
+        this.cache = new Cache.NodejsCache();
       }
 
       if (_options.configUrl) {

@@ -15,12 +15,10 @@ export abstract class ServiceBase extends EventEmitter {
 
     this.config = _config;
 
-    // TODO: review this as it may not be needed
     this.cache = new InMemoryCache();
     if (_config.cache) {
       this.cache = _config.cache;
     }
-    // this.cache = _config.cache ?? new InMemoryCache();
   }
 
   /**
@@ -29,8 +27,6 @@ export abstract class ServiceBase extends EventEmitter {
    * @param callback 
    */
   public FetchRemote(callback: (value: any) => void): void {
-    console.log(`FetchRemote()`);
-
     const requestHeaders: Types.KeyValue<string, string>[] = [
       // {
       //   key: "Accept",
@@ -49,7 +45,6 @@ export abstract class ServiceBase extends EventEmitter {
         value: this.config.Version
       }
     ];
-    console.log(requestHeaders);
 
     const api = new ApiService(this.config.logger).setHeaders(requestHeaders);
   

@@ -3,7 +3,7 @@ import { AutoUpdateConfig, IAutoUpdateConfig } from "./AutoUpdateConfig";
 import { AutoUpdateService, IAutoUpdateService } from "./AutoUpdateService";
 import { Evaluator } from "./Evaluator";
 import * as Const from "./Consts";
-import { IUser, User } from "./User";
+import { IUser } from "./User";
 
 export interface IFloodGateClient {
   IsReady(): boolean;
